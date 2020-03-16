@@ -16,12 +16,11 @@
 """This model extracts MFCC features per frame."""
 
 import delta.compat as tf
-from core.ops import py_x_ops
+from delta.layers.ops import py_x_ops
 from delta.utils.hparam import HParams
 from delta.data.frontend.base_frontend import BaseFrontend
 from delta.data.frontend.fbank import Fbank
 from delta.data.frontend.framepow import Framepow
-import copy
 
 
 class Mfcc(BaseFrontend):

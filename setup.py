@@ -73,10 +73,10 @@ if sys.platform == 'darwin':  # Mac os X before Mavericks (10.9)
   complie_args.append("-stdlib=libc++")
 cppjieba_includes = ["tools/cppjieba/deps",
                      "tools/cppjieba/include"]
-include_dirs = ['delta', 'delta/layers/ops/', TF_INCLUDE] + cppjieba_includes
+include_dirs = ['delta', 'core/ops/', TF_INCLUDE] + cppjieba_includes
 
-module = Extension('delta.layers.ops.x_ops',
-                   sources=glob('delta/layers/ops/kernels/*.cc'),
+module = Extension('core.ops.x_ops',
+                   sources=glob('core/ops/kernels/*.cc'),
                    extra_compile_args=complie_args,
                    include_dirs=include_dirs,
                    library_dirs=[TF_LIB_INC],
@@ -88,7 +88,7 @@ logging.info("LONG_DESCRIPTION: {}".format(LONG_DESCRIPTION))
 logging.info("license: {}".format(license_))
 logging.info("packages: {}".format(packages))
 
-custom_op_files = glob("delta/layers/ops/x_ops*.so")
+custom_op_files = glob("core/ops/x_ops*.so")
 if len(custom_op_files) > 0:
   for custom_op_file in custom_op_files:
     if os.path.exists(custom_op_file):
