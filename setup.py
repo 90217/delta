@@ -75,7 +75,7 @@ cppjieba_includes = ["tools/cppjieba/deps",
                      "tools/cppjieba/include"]
 include_dirs = ['delta', 'core/ops/', TF_INCLUDE] + cppjieba_includes
 
-module = Extension('core.ops.x_ops',
+module = Extension('layers.ops.x_ops',
                    sources=glob('core/ops/kernels/*.cc'),
                    extra_compile_args=complie_args,
                    include_dirs=include_dirs,

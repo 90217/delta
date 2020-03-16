@@ -22,15 +22,13 @@ from delta import PACKAGE_ROOT_DIR
 from delta.data.utils import read_lines_from_text_file
 
 #pylint: disable=invalid-name
-# file_dir = tf.resource_loader.get_data_files_path()
-file_dir = "core/ops"
+file_dir = tf.resource_loader.get_data_files_path()
 try:
   so_lib_file = tf.io.gfile.glob(file_dir + '/x_ops*.so')[0].split('/')[-1]
 except IndexError as e:
   raise FileNotFoundError(f"No x_ops*.so match under dir: {file_dir}")
 
-#path = tf.resource_loader.get_path_to_datafile(so_lib_file)
-path = file_dir + "/" + so_lib_file
+path = tf.resource_loader.get_path_to_datafile(so_lib_file)
 
 
 logging.info('x_ops.so path:{}'.format(path))

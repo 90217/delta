@@ -17,7 +17,14 @@ set -u
 set -o pipefail
 
 # check tf compiler version
-local_ver=`gcc --version | grep ^gcc | sed 's/^.* //g'`
+
+os_type=`uname  -a`
+if [[ $os_type =~ "Darwin" ]];then
+    local_ver=`gcc --version 2>&1 | grep ^Configured | awk  '{print substr($0,length($0)-4)}'`
+else
+    local_ver=`gcc --version | grep ^gcc | sed 's/^.* //g'`
+fi
+
 tf_ver=`python -c "import tensorflow as tf; print(tf.version.COMPILER_VERSION.split()[0]);"`
 
 if [  ${local_ver:0:1} -ne ${tf_ver:0:1} ];then
@@ -47,7 +54,7 @@ make clean &> /dev/null || exit 1
 
 if [ $target == 'delta' ];then
     make -j $(nproc)
-
+    cp $MAIN_ROOT/core/ops/x_ops.so $MAIN_ROOT/delta/layers/ops/
     if [ ! -f ./x_ops.so ];then
         echo "No x_ops.so generated. Compiling ops failed!"
         exit 1
