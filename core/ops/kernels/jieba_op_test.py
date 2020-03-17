@@ -14,14 +14,11 @@
 # limitations under the License.
 # ==============================================================================
 ''' jieba op test '''
-import os
 import time
-import tempfile
 import delta.compat as tf
 from absl import logging
 
-from delta.data.utils import read_lines_from_text_file
-from delta.layers.ops import py_x_ops
+from core.ops import py_x_ops
 
 # pylint: disable=not-context-manager, invalid-name
 

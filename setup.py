@@ -75,8 +75,12 @@ cppjieba_includes = ["tools/cppjieba/deps",
                      "tools/cppjieba/include"]
 include_dirs = ['delta', 'core/ops/', TF_INCLUDE] + cppjieba_includes
 
-module = Extension('layers.ops.x_ops',
-                   sources=glob('core/ops/kernels/*.cc'),
+sources_list = ['core/ops/kernels/jieba_op.cc', 'core/ops/kernels/ngram_op.cc',
+                'core/ops/kernels/simple_vocab_op.cc', 'core/ops/kernels/string_utils_op.cc',
+                'core/ops/kernels/tokenizer_ops.cc']
+
+module = Extension('delta.layers.ops.x_ops',
+                   sources=sources_list,
                    extra_compile_args=complie_args,
                    include_dirs=include_dirs,
                    library_dirs=[TF_LIB_INC],
@@ -86,9 +90,16 @@ license_ = "Apache Software License"
 packages = find_packages()
 logging.info("LONG_DESCRIPTION: {}".format(LONG_DESCRIPTION))
 logging.info("license: {}".format(license_))
-logging.info("packages: {}".format(packages))
 
-custom_op_files = glob("core/ops/x_ops*.so")
+pkg_remove_list = ["core", "core.ops", "core.ops.kernels"]
+for pkg in pkg_remove_list:
+  packages.remove(pkg)
+
+logging.info("packages: {}".format(packages))
+a=input()
+
+
+custom_op_files = glob("delta/layers/ops/x_ops*.so")
 if len(custom_op_files) > 0:
   for custom_op_file in custom_op_files:
     if os.path.exists(custom_op_file):
