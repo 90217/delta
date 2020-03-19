@@ -76,8 +76,12 @@ cppjieba_includes = ["tools/cppjieba/deps",
 include_dirs = ['delta', 'core/ops/', TF_INCLUDE] + cppjieba_includes
 
 sources_list = ['core/ops/kernels/jieba_op.cc', 'core/ops/kernels/ngram_op.cc',
-                'core/ops/kernels/simple_vocab_op.cc', 'core/ops/kernels/string_utils_op.cc',
-                'core/ops/kernels/tokenizer_ops.cc']
+                'core/ops/kernels/simple_vocab.cc',
+                'core/ops/kernels/simple_vocab_op.cc',
+                'core/ops/kernels/string_utils_op.cc',
+                'core/ops/kernels/tokenizer_ops.cc', 'core/ops/kernels/x_ops.cc']
+
+pkg_remove_list = ["core", "core.ops", "core.ops.kernels"]
 
 module = Extension('delta.layers.ops.x_ops',
                    sources=sources_list,
@@ -87,16 +91,10 @@ module = Extension('delta.layers.ops.x_ops',
                    libraries=[TF_SO_LIB],
                    language='c++')
 license_ = "Apache Software License"
-packages = find_packages()
+packages = find_packages(exclude=pkg_remove_list)
 logging.info("LONG_DESCRIPTION: {}".format(LONG_DESCRIPTION))
 logging.info("license: {}".format(license_))
-
-pkg_remove_list = ["core", "core.ops", "core.ops.kernels"]
-for pkg in pkg_remove_list:
-  packages.remove(pkg)
-
 logging.info("packages: {}".format(packages))
-a=input()
 
 
 custom_op_files = glob("delta/layers/ops/x_ops*.so")
@@ -117,7 +115,7 @@ setup(
     maintainer=MAINTAINER,
     maintainer_email=MAINTAINER_EMAIL,
     packages=packages,
-    package_data={"delta": ["resources/cppjieba_dict/*.utf8"]},
+    package_data={"delta": ["resources/cppjieba_dict/*.utf8", "configs/*.yml"]},
     entry_points={
         'console_scripts': [
             'delta = delta.main:nlp_entry']},

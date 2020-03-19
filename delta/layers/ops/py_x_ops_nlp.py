@@ -28,14 +28,9 @@ try:
 except IndexError as e:
   raise FileNotFoundError(f"No x_ops*.so match under dir: {file_dir}")
 
-# path = tf.resource_loader.get_path_to_datafile(so_lib_file)
+path = tf.resource_loader.get_path_to_datafile(so_lib_file)
 
-path = "/Users/didi/PycharmProjects/didi/delta_2020_1_9/delta/delta/layers/ops/x_ops.so"
-# path = "delta/layers/ops/x_ops.so"
-# path = "/Users/didi/PycharmProjects/didi/delta_2020_1_9/delta/core/ops/x_ops.so"
-# path = "core/ops/x_ops.so"
 logging.info('x_ops.so path:{}'.format(path))
-
 gen_x_ops = tf.load_op_library(path)
 
 

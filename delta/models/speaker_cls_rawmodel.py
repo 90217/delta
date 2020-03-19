@@ -23,6 +23,7 @@ import tensorflow.keras.layers as keras_layers
 
 from delta import utils
 from delta.layers import common_layers
+from delta.layers import common_speech_layers
 from delta.models.base_model import RawModel
 from delta.utils.register import registers
 from delta.utils.loss.loss_utils import arcface_loss
@@ -406,7 +407,7 @@ class SpeakerTDNNRawModel(SpeakerBaseRawModel):
         unit_name = 'unit-' + str(index + 1)
         with tf.variable_scope(unit_name):
           tdnn_name = 'tdnn-' + str(index + 1)
-          x = common_layers.tdnn(
+          x = common_speech_layers.tdnn(
               x,
               tdnn_name,
               last_w,
